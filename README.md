@@ -20,4 +20,4 @@ Una vez hayamos descargado el repositorio debemos abrir una terminal o símbolo 
 
 Una vez realizados todos los pasos anteriores simplemente debemos ejecutar en una terminal o símbolo del sistema el comando "php artisan serve", lo cual hará que la Api Rest empiece a correr en "http://127.0.0.1:8000".
 
-Una realizar las operaciones deseadas se deben lanzar peticiones desde un agente PostMan o similares (incluyendo la cabecera "Accept, application/json" si es que no viene preestablecida) a la url http://127.0.0.1:8000/api/ENDPOINT_DESEADO o desde la propia documentación Swagger ubicada en la url http://127.0.0.1:8000/api/documentation .
+Una vez realizadas las operaciones deseadas se deben lanzar peticiones desde un agente PostMan o similares (incluyendo la cabecera "Accept, application/json" si es que no viene preestablecida) a la url http://127.0.0.1:8000/api/ENDPOINT_DESEADO o desde la propia documentación Swagger ubicada en la url http://127.0.0.1:8000/api/documentation .
