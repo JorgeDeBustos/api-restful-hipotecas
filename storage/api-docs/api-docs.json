@@ -1,0 +1,631 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Simulador Hipotecas Api Rest",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/",
+            "description": "Localhost env"
+        }
+    ],
+    "paths": {
+        "/clientes": {
+            "get": {
+                "tags": [
+                    "Operaciones relacionadas con clientes"
+                ],
+                "summary": "Obtener dnis de clientes",
+                "description": "Devuelve los dnis de los clientes existentes",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Clientes obtenidos con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "response": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "ID_cliente": {
+                                                        "type": "number"
+                                                    },
+                                                    "dni": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No hay clientes registrados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "404"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "No hay clientes registrados"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Operaciones relacionadas con clientes"
+                ],
+                "summary": "Creación de un nuevo cliente",
+                "description": "Creación de un nuevo cliente no existente en la base de datos",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "dni",
+                                    "email",
+                                    "capital_solicitado"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Pepe"
+                                    },
+                                    "dni": {
+                                        "type": "string",
+                                        "format": "dni",
+                                        "uniqueItems": true,
+                                        "example": "12345678Z"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "pepe@gmail.com"
+                                    },
+                                    "capital_solicitado": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": "200000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente creado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "201"
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "Pepe"
+                                                },
+                                                "dni": {
+                                                    "type": "string",
+                                                    "example": "12345678Z"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "pepe@gmail.com"
+                                                },
+                                                "capital_solicitado": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "200000"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Contenido Inprocesable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The x field {error type}"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "error_field": {
+                                                        "example": "The x field {error type}"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error Interno"
+                    }
+                }
+            }
+        },
+        "/clientes/{dni}": {
+            "get": {
+                "tags": [
+                    "Operaciones relacionadas con clientes"
+                ],
+                "summary": "Obtener información de un cliente",
+                "description": "Devuelve información detallada de un cliente según su dni",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del cliente a buscar",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "dni"
+                        },
+                        "example": "52696831J"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente creado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "ID_cliente": {
+                                                    "type": "number"
+                                                },
+                                                "nombre": {
+                                                    "type": "string"
+                                                },
+                                                "dni": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "capital_solicitado": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "simulaciones_hipotecas": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "ID_simulacion": {
+                                                                "type": "number"
+                                                            },
+                                                            "FK_cliente": {
+                                                                "type": "number"
+                                                            },
+                                                            "tae": {
+                                                                "type": "number",
+                                                                "format": "float"
+                                                            },
+                                                            "plazo_amortizacion": {
+                                                                "type": "integer"
+                                                            },
+                                                            "cuota": {
+                                                                "type": "number",
+                                                                "format": "float"
+                                                            },
+                                                            "importe": {
+                                                                "type": "number",
+                                                                "format": "float"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "404"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Operaciones relacionadas con clientes"
+                ],
+                "summary": "Actualizar la información de un cliente",
+                "description": "Actualizar la información de un cliente existente en la base de datos",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del cliente a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "dni"
+                        },
+                        "example": "52696831J"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "dni",
+                                    "email",
+                                    "capital_solicitado"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "LuisEdited"
+                                    },
+                                    "dni": {
+                                        "type": "string",
+                                        "format": "dni",
+                                        "uniqueItems": true,
+                                        "example": "52696831J"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "luis_garcia@gmail.com"
+                                    },
+                                    "capital_solicitado": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": "200000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente creado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "201"
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "nombre": {
+                                                    "type": "string",
+                                                    "example": "LuisEdited"
+                                                },
+                                                "dni": {
+                                                    "type": "string",
+                                                    "example": "52696831J"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "luis_garcia@gmail.com"
+                                                },
+                                                "capital_solicitado": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "200000"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Contenido Inprocesable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The x field {error type}"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "error_field": {
+                                                        "example": "The x field {error type}"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "404"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Operaciones relacionadas con clientes"
+                ],
+                "summary": "Elimina un cliente",
+                "description": "Elimina un cliente existente por su DNI",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del cliente a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "dni"
+                        },
+                        "example": "12345678Z"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente y simulaciones eliminados con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "200"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente y simulaciones eliminados con éxito"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "404"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulacion-hipoteca/{dni}": {
+            "post": {
+                "tags": [
+                    "Operaciones relacionadas con simulaciones de hipotecas"
+                ],
+                "summary": "Genera una simulación de hipoteca",
+                "description": "Genera una simulación de hipoteca de un cliente existente",
+                "operationId": "simulacionHipoteca",
+                "parameters": [
+                    {
+                        "name": "dni",
+                        "in": "path",
+                        "description": "DNI del cliente deseado",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "dni"
+                        },
+                        "example": "52696831J"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos de la hipoteca",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tae",
+                                    "plazo_amortizacion"
+                                ],
+                                "properties": {
+                                    "tae": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": "5"
+                                    },
+                                    "plazo_amortizacion": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": "15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Simulación de hipoteca generada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "201"
+                                        },
+                                        "response": {
+                                            "properties": {
+                                                "tae": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "5"
+                                                },
+                                                "plazo_amortizacion": {
+                                                    "type": "integer",
+                                                    "example": "15"
+                                                },
+                                                "cuota_mensual": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "790.794"
+                                                },
+                                                "importe_total_devolucion": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": "42342.853"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cliente no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "number",
+                                            "example": "404"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Cliente no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor"
+                    }
+                }
+            }
+        }
+    }
+}
