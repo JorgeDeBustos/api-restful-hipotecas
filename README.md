@@ -12,10 +12,6 @@ Requisitos previos a la descarga y ejecución del repositorio:
         - extension_dir = "absolute/path/to/php/ext".
         - sqlite3.extension_dir = "absolute/path/to/sqlitefolder" (directorio creado con anterioridad).
 
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
 ## Descarga del repositorio y configuración del proyecto
 
 Una vez hayamos descargado el repositorio debemos abrir una terminal o símbolo del sistema y ejecutamos el comando "composer install --ignore-platform-reqs". Una vez haya finalizado debemos editar la línea "DB_DATABASE_URL" en el archivo .env del proyecto y establecer la ruta absoluta hasta el archivo "database\database.sqlite" del proyecto.
