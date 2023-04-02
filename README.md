@@ -1,15 +1,22 @@
 ## Requisitos previos
 
-Requisitos previos a la descarga y ejecución del repositorio:
+Requisitos previos a la ejecución del proyecto son tener en nuestro sistema PHP, Composer y SQLite, si alguno o todos de los requisitos no se cumplen seguir los siguientes pasos:
 
 - [Instalación última versión PHP](https://www.php.net/downloads.php).
+    - Si optamos por la instalación manual realizar los siguientes pasos:
+        - Descargar zip con la versión de php.
+        - Descomprimir contenido en directorio (estandar) "C:\php".
+        - Copiar archivo "php.ini-development" y reescribirlo como "php.ini".
+        - Editar el archivo "php.ini" y editar la línea extension_dir="absolute/path/to/phpfolder/ext".
+        - Editar la variable de entorno del sistema PATH y añadir la línea "absolute/path/to/phpfolder".
 - [Instalación última version Composer](https://getcomposer.org/download/).
 - [Descarga de binarios precompilados de SQLite para el SO deseado](https://www.sqlite.org/download.html).
+- Una vez descargado e instalados todos los requisitos reiniciar el sistema.
 - Crear un directorio y alojar dentro los archivos "sqlite3.dll" y "sqlite3.def" obtenidos.
-- Realizar los siguientes pasos en el archivo "php.ini":
+- Realizar los siguientes pasos en el archivo "php.ini" (copia del archivo php.ini-development renombrado como php.ini):
+    - Descomentar la línea "extension=zip".
     - Descomentar la línea "extension=pdo_sqlite".
-    - Añadir las siguientes líneas en la sección Environment:
-        - extension_dir = "absolute/path/to/php/ext".
+    - A continuación de esta añadir la siguiente línea:
         - sqlite3.extension_dir = "absolute/path/to/sqlitefolder" (directorio creado con anterioridad).
 
 ## Descarga del repositorio y configuración del proyecto
