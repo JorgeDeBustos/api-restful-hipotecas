@@ -11,13 +11,14 @@ Requisitos previos a la ejecución del proyecto son tener en nuestro sistema PHP
         - Editar la variable de entorno del sistema PATH y añadir la línea "absolute/path/to/phpfolder".
 - [Instalación última version Composer](https://getcomposer.org/download/).
 - [Descarga de binarios precompilados de SQLite para el SO deseado](https://www.sqlite.org/download.html).
-- Una vez descargado e instalados todos los requisitos reiniciar el sistema.
 - Crear un directorio y alojar dentro los archivos "sqlite3.dll" y "sqlite3.def" obtenidos.
 - Realizar los siguientes pasos en el archivo "php.ini" (copia del archivo php.ini-development renombrado como php.ini):
     - Descomentar la línea "extension=zip".
     - Descomentar la línea "extension=pdo_sqlite".
     - A continuación de esta añadir la siguiente línea:
         - sqlite3.extension_dir = "absolute/path/to/sqlitefolder" (directorio creado con anterioridad).
+
+Una vez realizados todos estos pasos será necesario reiniciar el sistema.
 
 ## Descarga del repositorio y configuración del proyecto
 
